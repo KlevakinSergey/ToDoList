@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Что бы начать работу введите ваш логин и пароль</h1>
+    <p>если у вас нет профиля зарегестрируйтесь <a href="{% url 'register' %}">здесь</a></p>
+    {% if form.errors %}
+        <p>Your username and password didn't match.Please try again.</p>
+    {% else %}
+    <p>Please, use the following form to log-in:</p>
+    {% endif %}
+    <div class="login-form">
+        <form action="{% url 'login' %}" method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" /> <p><input type="submit" value="Log-in"></p>
+        </form>
+    </div>
+
+
+
+        <li class="google">
+            <a href="{% url "social:begin" "google-oauth2" %}">Залогинеться через Google </a>
+        </li>
+
+
+
+</div>
+</body>
+</html>
