@@ -33,12 +33,11 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponse('Authenticated successfully')
 
             else:
-                return HttpResponse('Disabled account')
+                return HttpResponse('Аккаунт не найден')
         else:
-            return HttpResponse('Invalid login')
+            return HttpResponse('Неверный логин')
     else:
         form = LoginForm()
 
@@ -53,7 +52,7 @@ def index(request):
     if search_query:
         tasks = Task.objects.filter(title__icontains=search_query)
     paginator = Paginator(tasks, 3)
-    page_number = request.GET.get('page',range(1,5))
+    page_number = request.GET.get('page', 1)
     page = paginator.get_page(page_number)
     is_paginated = page.has_other_pages()
 
@@ -86,18 +85,14 @@ def index(request):
 def update_task(request, pk):
     task = Task.objects.get(id=pk)
     form = TaskForm(instance=task)
-
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            my_user = User.objects.get(id=request.user.id)
-            task = form.save(commit=False)
-            task.user = my_user
-            task.save()
+            form.save()
             return redirect('list')
 
 
-    return  render(request, index(), {'form': form, 'task': task})
+    return  render(request, 'index.html', {'form': form, 'task': task})
 
 
 

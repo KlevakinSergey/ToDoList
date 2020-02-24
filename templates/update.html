@@ -1,0 +1,6 @@
+
+
+<form method="POST" action="{% url 'update_task' task.id %}">
+    {% csrf_token %}
+    {{ form}}
+</form>

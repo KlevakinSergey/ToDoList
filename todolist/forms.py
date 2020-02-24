@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class TaskForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Добавить новое задание...'}))
+    # date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'placeholder': 'Добавить время'}))
 
     class Meta:
         model = Task
